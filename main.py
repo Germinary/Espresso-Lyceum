@@ -2,15 +2,16 @@ import sys
 from PyQt5.QtWidgets import QApplication, QMainWindow
 from PyQt5 import uic
 import sqlite3
+from UI import addEditCoffeeForm, main
 
-db = sqlite3.connect('coffee.sqlite')
+db = sqlite3.connect('data/coffee.sqlite')
 sql = db.cursor()
 
 
-class Edit(QMainWindow):
+class Edit(QMainWindow, addEditCoffeeForm.Ui_MainWindow):
     def __init__(self, parent):
         super().__init__(parent)
-        uic.loadUi('addEditCoffeeForm.ui', self)
+        self.setupUi(self)
 
         self.pushButton.clicked.connect(self.do)
         self.lineEdit_2.textChanged.connect(self.refresh)
@@ -51,11 +52,11 @@ class Edit(QMainWindow):
             db.commit()
 
 
-class Espresso(QMainWindow):
+class Espresso(QMainWindow, main.Ui_MainWindow):
     def __init__(self):
         super().__init__()
-        uic.loadUi('main.ui', self)
-        
+        self.setupUi(self)
+
         self.button.clicked.connect(self.do)
         self.button2.clicked.connect(self.edit)
 
